@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Todo App</string>
+    <string name="addItem">ADD ITEM</string>
+    <string name="save">SAVE</string>
+</resources>
