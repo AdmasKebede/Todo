@@ -26,7 +26,7 @@ public class EditItem extends AppCompatActivity {
 
     String oldItem,newItem;
     EditText userInput;
-    Button save;
+    Button save,delete;
     String FILE_NAME = "TodoList";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class EditItem extends AppCompatActivity {
         oldItem = getIntent().getStringExtra("OLD_ITEM");
         userInput = (EditText) findViewById(R.id.userEditInput);
         save = (Button) findViewById(R.id.save);
+        delete = (Button) findViewById(R.id.delete);
 
 
 
@@ -43,17 +44,31 @@ public class EditItem extends AppCompatActivity {
         ArrayList<String> list = readFromFile();
 
 
-        for(int i=0;i<list.size();i++){
-            Log.d("List=============>",list.get(i));
-        }
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 newItem= userInput.getText().toString();
                 Intent intent = new Intent(EditItem.this, MainActivity.class);
-                list.set(list.indexOf(oldItem),newItem);
-                writeToFile(list);
-                startActivity(intent);
+                if(newItem.isEmpty()){
+                    list.remove(oldItem);
+                } else{
+                    list.set(list.indexOf(oldItem),newItem);
+                    writeToFile(list);
+                    startActivity(intent);
+                }
+
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditItem.this, MainActivity.class);
+
+                    list.remove(oldItem);
+                    writeToFile(list);
+                    startActivity(intent);
+
+
             }
         });
 
